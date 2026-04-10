@@ -25,3 +25,9 @@ jobs:
       - name: Check PEP8
         run: |
           flake8 .
+
+          - name: Upload HTML report
+            uses: actions/upload-artifact@v3
+            with:
+              name: pytest-report
+              path: report.html
