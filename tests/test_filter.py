@@ -1,3 +1,9 @@
+import sys
+import os
+
+# фікс для екшенс(не бачить src)
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 import pytest
 from src.filter import filter_lines
 
