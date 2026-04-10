@@ -1,28 +1,39 @@
-import sys
-import os
-
 import pytest
-# фікс для екшенс(не бачить src)
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from src.filter import filter_lines
+from src.filter import filter_lines, write_lines
 
 
 @pytest.fixture
 def sample_file(tmp_path):
-    file = tmp_path / "test.txt"
-    file.write_text("hello\nworld\nhello python\n")
+    """Create a temporary input file."""
+    file = tmp_path / "input.txt"
+    file.write_text(
+        "hello\n"
+        "test line\n"
+        "another test\n"
+        "nothing\n"
+    )
     return file
 
 
-@pytest.mark.parametrize("keyword, expected", [
-    ("hello", ["hello\n", "hello python\n"]),
-    ("world", ["world\n"]),
-    ("python", ["hello python\n"]),
-])
-def test_filter_lines(sample_file, keyword, expected, tmp_path):
-    output = tmp_path / "out.txt"
-    result = filter_lines(str(sample_file), keyword, str(output))
+@pytest.mark.parametrize(
+    "keyword, expected_count",
+    [
+        ("test", 2),
+        ("hello", 1),
+        ("none", 0),
+    ]
+)
+def test_filter_lines(sample_file, keyword, expected_count):
+    result = filter_lines(sample_file, keyword)
+    assert len(result) == expected_count
 
-    assert result == expected
-    assert output.read_text().splitlines(keepends=True) == expected
+
+def test_write_lines(tmp_path):
+    output_file = tmp_path / "output.txt"
+    lines = ["one\n", "two\n"]
+
+    write_lines(output_file, lines)
+
+    content = output_file.read_text()
+    assert content == "one\ntwo\n"
