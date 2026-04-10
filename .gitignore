@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+.env/
+
+# PyCharm
+.idea/
+*.iml
+
+# VS Code (если вдруг)
+.vscode/
+
+# Mac / Windows мусор
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# SQLite
+*.sqlite3
+
+# dotenv
+.env
