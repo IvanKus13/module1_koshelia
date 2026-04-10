@@ -20,7 +20,7 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest --html=report.html
+          PYTHONPATH=. pytest --html=report.html
 
       - name: Check PEP8
         run: |
